@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Exam Details - ExamGuard</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        margin: 0;
+        background: #f4f7fb;
+        color: #1f2937;
+      }
+
+      .header {
+        background: #111827;
+        color: white;
+        padding: 18px 45px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .logo span {
+        color: #60a5fa;
+      }
+
+      .nav a {
+        color: white;
+        text-decoration: none;
+        margin-left: 22px;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 50px auto;
+        padding: 20px;
+      }
+
+      .title {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .title h1 {
+        font-size: 32px;
+        margin-bottom: 8px;
+      }
+
+      .title p {
+        color: #6b7280;
+      }
+
+      .card {
+        background: white;
+        border-radius: 20px;
+        padding: 32px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      }
+
+      .exam-name {
+        font-size: 25px;
+        font-weight: bold;
+        margin-bottom: 25px;
+      }
+
+      .details {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+
+      .detail {
+        background: #f8fafc;
+        padding: 20px;
+        border-radius: 12px;
+      }
+
+      .label {
+        color: #6b7280;
+        font-size: 13px;
+        margin-bottom: 7px;
+      }
+
+      .value {
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .warning {
+        margin-top: 25px;
+        background: #fff7ed;
+        border: 1px solid #fed7aa;
+        padding: 22px;
+        border-radius: 14px;
+      }
+
+      .warning h3 {
+        margin-top: 0;
+        color: #c2410c;
+      }
+
+      .warning ul {
+        line-height: 1.9;
+        color: #7c2d12;
+      }
+
+      .completed {
+        margin-top: 25px;
+        background: #ecfdf5;
+        border: 1px solid #a7f3d0;
+        padding: 24px;
+        border-radius: 14px;
+      }
+
+      .completed h3 {
+        margin-top: 0;
+        color: #047857;
+      }
+
+      .result-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .result-box {
+        background: white;
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid #d1fae5;
+      }
+
+      .result-label {
+        font-size: 12px;
+        color: #6b7280;
+      }
+
+      .result-value {
+        margin-top: 5px;
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+      .start-area {
+        text-align: center;
+        margin-top: 30px;
+      }
+
+      .start-btn {
+        border: none;
+        background: #2563eb;
+        color: white;
+        padding: 15px 38px;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .start-btn:hover {
+        background: #1d4ed8;
+      }
+
+      .result-btn {
+        display: inline-block;
+        background: #111827;
+        color: white;
+        padding: 13px 28px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .back {
+        display: block;
+        text-align: center;
+        margin-top: 18px;
+        color: #6b7280;
+        text-decoration: none;
+      }
+
+      @media (max-width: 600px) {
+        .header {
+          padding: 15px 20px;
+        }
+
+        .details,
+        .result-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="logo">🛡 Exam<span>Guard</span></div>
+
+      <nav class="nav">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/profile">Profile</a>
+        <a href="/logout">Logout</a>
+      </nav>
+    </header>
+
+    <div class="container">
+      <div class="title">
+        <h1>📋 Examination Details</h1>
+
+        <p>Please review the examination information before starting.</p>
+      </div>
+
+      <div class="card">
+        <div class="exam-name">Online Examination</div>
+
+        <div class="details">
+          <div class="detail">
+            <div class="label">Examination Duration</div>
+
+            <div class="value">30 Minutes</div>
+          </div>
+
+          <div class="detail">
+            <div class="label">Questions</div>
+
+            <div class="value">{{ total_questions }} Questions</div>
+          </div>
+
+          <div class="detail">
+            <div class="label">Face Monitoring</div>
+
+            <div class="value">✓ Enabled</div>
+          </div>
+
+          <div class="detail">
+            <div class="label">Browser Monitoring</div>
+
+            <div class="value">✓ Enabled</div>
+          </div>
+        </div>
+
+        {% if already_completed %}
+
+        <!-- ==================================================
+             ALREADY COMPLETED
+        ================================================== -->
+
+        <div class="completed">
+          <h3>✓ Examination Already Completed</h3>
+
+          <p>
+            You have already submitted this examination. A second attempt cannot
+            be started.
+          </p>
+
+          {% if completed_exam %}
+
+          <div class="result-grid">
+            <div class="result-box">
+              <div class="result-label">Exam Score</div>
+
+              <div class="result-value">
+                {{ completed_exam.exam_score or 0 }} / {{ total_questions }}
+              </div>
+            </div>
+
+            <div class="result-box">
+              <div class="result-label">Integrity Score</div>
+
+              <div class="result-value">
+                {{ completed_exam.integrity_score or 0 }}/100
+              </div>
+            </div>
+
+            <div class="result-box">
+              <div class="result-label">Risk Level</div>
+
+              <div class="result-value">
+                {{ completed_exam.risk_level or "Not Available" }}
+              </div>
+            </div>
+          </div>
+
+          {% endif %}
+        </div>
+
+        <div class="start-area">
+          <a href="/dashboard" class="result-btn">
+            📊 View Examination Result
+          </a>
+        </div>
+
+        {% else %}
+
+        <!-- ==================================================
+             BEFORE EXAM
+        ================================================== -->
+
+        <div class="warning">
+          <h3>⚠ Before You Start</h3>
+
+          <ul>
+            <li>Allow camera access when requested.</li>
+
+            <li>Keep your face clearly visible to the camera.</li>
+
+            <li>Do not switch browser tabs during the examination.</li>
+
+            <li>Avoid leaving the examination window.</li>
+
+            <li>Make sure you have a stable internet connection.</li>
+          </ul>
+        </div>
+
+        <div class="start-area">
+          <form action="/start-exam" method="POST">
+            <button type="submit" class="start-btn">
+              🚀 Start Examination
+            </button>
+          </form>
+        </div>
+
+        {% endif %}
+
+        <a href="/dashboard" class="back"> ← Back to Dashboard </a>
+      </div>
+    </div>
+  </body>
+</html>

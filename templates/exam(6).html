@@ -1,0 +1,1005 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>ExamGuard Examination</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: #f4f7fb;
+        color: #1f2937;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .header {
+        background: #0f172a;
+        padding: 18px 55px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .logo {
+        color: #38bdf8;
+        font-size: 25px;
+        font-weight: bold;
+      }
+
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .exam-label {
+        color: #cbd5e1;
+        font-size: 14px;
+      }
+
+      .integrity {
+        background: #dcfce7;
+        color: #15803d;
+        padding: 7px 13px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .main {
+        max-width: 1100px;
+        margin: 35px auto;
+        padding: 0 25px;
+      }
+
+      .title-section {
+        margin-bottom: 25px;
+      }
+
+      .title-section h1 {
+        font-size: 28px;
+        color: #0f172a;
+        margin: 0 0 7px 0;
+      }
+
+      .title-section p {
+        color: #64748b;
+        font-size: 14px;
+      }
+
+      .status-bar {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 18px 22px;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        margin-bottom: 25px;
+
+        box-shadow: 0 4px 15px rgba(15, 23, 42, 0.05);
+      }
+
+      .status-title {
+        color: #64748b;
+        font-size: 13px;
+      }
+
+      .status-value {
+        margin-top: 5px;
+        font-weight: bold;
+        color: #2563eb;
+      }
+
+      .live-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        color: #16a34a;
+        font-size: 13px;
+        font-weight: bold;
+      }
+
+      .dot {
+        width: 9px;
+        height: 9px;
+        background: #22c55e;
+        border-radius: 50%;
+      }
+
+      .exam-grid {
+        display: grid;
+        grid-template-columns: 1.6fr 1fr;
+        gap: 25px;
+      }
+
+      .card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 28px;
+
+        box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+      }
+
+      .card h2 {
+        font-size: 20px;
+        color: #0f172a;
+        margin: 0 0 8px 0;
+      }
+
+      .card-subtitle {
+        color: #64748b;
+        font-size: 13px;
+        margin-bottom: 25px;
+      }
+
+      .question-number {
+        color: #2563eb;
+        font-size: 13px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .question {
+        font-size: 18px;
+        font-weight: bold;
+        line-height: 1.5;
+        margin-bottom: 22px;
+      }
+
+      .option {
+        display: block;
+
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+
+        padding: 14px 16px;
+        border-radius: 9px;
+
+        margin-bottom: 12px;
+
+        color: #334155;
+        cursor: pointer;
+      }
+
+      .option:hover {
+        border-color: #60a5fa;
+        background: #eff6ff;
+      }
+
+      .option input {
+        margin-right: 10px;
+      }
+
+      .button-row {
+        margin-top: 25px;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        gap: 10px;
+      }
+
+      .left-buttons,
+      .right-buttons {
+        display: flex;
+        gap: 10px;
+      }
+
+      button {
+        border: none;
+        cursor: pointer;
+
+        padding: 11px 20px;
+
+        border-radius: 8px;
+
+        font-size: 13px;
+        font-weight: bold;
+      }
+
+      .primary {
+        background: #2563eb;
+        color: white;
+      }
+
+      .primary:hover {
+        background: #1d4ed8;
+      }
+
+      .secondary {
+        background: #e2e8f0;
+        color: #334155;
+      }
+
+      .secondary:hover {
+        background: #cbd5e1;
+      }
+
+      .danger {
+        background: #dc2626;
+        color: white;
+      }
+
+      .danger:hover {
+        background: #b91c1c;
+      }
+
+      .pause {
+        background: #f59e0b;
+        color: white;
+      }
+
+      .pause:hover {
+        background: #d97706;
+      }
+
+      .palette {
+        margin-top: 25px;
+
+        background: white;
+
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+
+        padding: 22px;
+
+        box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05);
+      }
+
+      .palette h3 {
+        font-size: 15px;
+        margin: 0 0 15px 0;
+      }
+
+      .palette-buttons {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .palette-form {
+        margin: 0;
+      }
+
+      .palette-button {
+        width: 40px;
+        height: 40px;
+
+        padding: 0;
+
+        background: #e2e8f0;
+        color: #334155;
+
+        border-radius: 8px;
+      }
+
+      .palette-button:hover {
+        background: #bfdbfe;
+      }
+
+      .palette-current {
+        background: #2563eb;
+        color: white;
+      }
+
+      /* CAMERA */
+
+      .camera-box {
+        position: relative;
+
+        height: 210px;
+
+        background: #0f172a;
+
+        border-radius: 12px;
+
+        overflow: hidden;
+
+        margin-bottom: 12px;
+      }
+
+      .camera-box video {
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+
+        display: block;
+
+        transform: scaleX(-1);
+      }
+
+      .camera-message {
+        position: absolute;
+
+        inset: 0;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        text-align: center;
+
+        padding: 20px;
+
+        color: #cbd5e1;
+
+        background: #0f172a;
+
+        font-size: 13px;
+      }
+
+      .camera-status {
+        display: flex;
+        align-items: center;
+
+        gap: 8px;
+
+        font-size: 13px;
+        font-weight: bold;
+
+        margin-bottom: 18px;
+      }
+
+      .camera-dot {
+        width: 9px;
+        height: 9px;
+
+        background: #f59e0b;
+
+        border-radius: 50%;
+      }
+
+      .camera-dot.active {
+        background: #22c55e;
+      }
+
+      .security {
+        background: #f8fafc;
+
+        border: 1px solid #e2e8f0;
+
+        border-radius: 10px;
+
+        padding: 15px;
+
+        margin-bottom: 18px;
+      }
+
+      .security-title {
+        font-size: 12px;
+        color: #64748b;
+        margin-bottom: 5px;
+      }
+
+      .security-score {
+        color: #16a34a;
+        font-size: 21px;
+        font-weight: bold;
+      }
+
+      /* LIVE ALERT POPUP */
+      .alert-popup-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: min(360px, calc(100vw - 40px));
+        pointer-events: none;
+      }
+
+      .alert-popup {
+        background: #ffffff;
+        border-left: 5px solid #dc2626;
+        border-radius: 10px;
+        padding: 14px 16px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.18);
+        animation: alertSlideIn 0.25s ease-out;
+      }
+
+      .alert-popup-title {
+        font-size: 14px;
+        font-weight: bold;
+        color: #b91c1c;
+        margin-bottom: 5px;
+      }
+
+      .alert-popup-message {
+        font-size: 12px;
+        color: #475569;
+        line-height: 1.4;
+      }
+
+      @keyframes alertSlideIn {
+        from { transform: translateX(30px); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+
+      .warning {
+        background: #fff7ed;
+
+        border: 1px solid #fed7aa;
+
+        color: #c2410c;
+
+        padding: 13px;
+
+        border-radius: 9px;
+
+        font-size: 12px;
+      }
+
+      .paused-box {
+        background: #fff7ed;
+
+        border: 1px solid #fed7aa;
+
+        color: #c2410c;
+
+        padding: 15px;
+
+        border-radius: 10px;
+
+        margin-bottom: 20px;
+      }
+
+      .submitted {
+        background: #f0fdf4;
+
+        border: 1px solid #bbf7d0;
+
+        color: #15803d;
+
+        border-radius: 12px;
+
+        padding: 25px;
+
+        text-align: center;
+      }
+
+      .submitted h2 {
+        margin-bottom: 8px;
+      }
+
+      .score-box {
+        margin-top: 20px;
+
+        font-size: 24px;
+
+        font-weight: bold;
+
+        color: #2563eb;
+      }
+
+      .photo-section {
+        margin-top: 25px;
+
+        background: white;
+
+        border: 1px solid #e2e8f0;
+
+        border-radius: 16px;
+
+        padding: 25px;
+
+        box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05);
+      }
+
+      .photo-section h2 {
+        font-size: 19px;
+
+        color: #0f172a;
+
+        margin-bottom: 8px;
+      }
+
+      .photo-section p {
+        color: #64748b;
+
+        font-size: 13px;
+
+        margin-bottom: 18px;
+      }
+
+      .footer {
+        text-align: center;
+
+        margin-top: 40px;
+
+        padding: 25px;
+
+        color: #64748b;
+
+        font-size: 13px;
+      }
+
+      .footer a {
+        color: #2563eb;
+        text-decoration: none;
+      }
+
+      @media (max-width: 800px) {
+        .header {
+          padding: 18px 25px;
+        }
+
+        .exam-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .status-bar {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+        }
+
+        .button-row {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .left-buttons,
+        .right-buttons {
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="logo">ExamGuard</div>
+
+      <div class="header-right">
+        <span class="exam-label"> Live Examination </span>
+
+        <span class="integrity"> Integrity 100% </span>
+      </div>
+    </header>
+
+    <div id="alertPopupContainer" class="alert-popup-container"></div>
+
+    <main class="main">
+      <section class="title-section">
+        <h1>ExamGuard Examination</h1>
+
+        <p>Welcome, {{ name }}. Please complete your examination securely.</p>
+      </section>
+
+      <section class="status-bar">
+        <div>
+          <div class="status-title">Exam Status</div>
+
+          <div class="status-value">{{ status }}</div>
+        </div>
+
+        <div class="live-status">
+          <span class="dot"></span>
+
+          Monitoring Active
+        </div>
+      </section>
+
+      {% if submitted %}
+
+      <!-- SUBMITTED -->
+
+      <section class="submitted">
+        <h2>✓ Exam Submitted Successfully</h2>
+
+        <p>Your examination session has been completed.</p>
+
+        <div class="score-box">Score: {{ score }} / {{ total_questions }}</div>
+
+        <br />
+
+        <p>Thank you for completing the ExamGuard assessment.</p>
+      </section>
+
+      {% else %}
+
+      <section class="exam-grid">
+        <!-- EXAM CARD -->
+
+        <div class="card">
+          <h2>Examination</h2>
+
+          <p class="card-subtitle">
+            Answer the questions carefully before submitting.
+          </p>
+
+          {% if status == "NOT STARTED" %}
+
+          <div class="question-number">READY TO BEGIN</div>
+
+          <div class="question">
+            Your examination contains {{ total_questions }} questions.
+          </div>
+
+          <p style="color: #64748b">
+            Click the button below to start your examination.
+          </p>
+
+          <div class="button-row">
+            <form action="/start-exam" method="POST">
+              <button type="submit" class="primary">Start Exam →</button>
+            </form>
+          </div>
+
+          {% elif status == "PAUSED" %}
+
+          <div class="paused-box">
+            <strong> ⏸ Examination Paused </strong>
+
+            <br />
+            <br />
+
+            Your exam is currently paused.
+          </div>
+
+          <div class="button-row">
+            <form action="/resume-exam" method="POST">
+              <button type="submit" class="primary">Resume Exam →</button>
+            </form>
+          </div>
+
+          {% elif status == "STARTED" and question %}
+
+          <div class="question-number">
+            QUESTION {{ question_number }} OF {{ total_questions }}
+          </div>
+
+          <div class="question">{{ question.question }}</div>
+
+          <form method="POST" id="questionForm">
+            {% for option in question.options %}
+
+            <label class="option">
+              <input
+                type="radio"
+                name="answer"
+                value="{{ option }}"
+                {% if answers and answers.get((question_number - 1)|string) == option %}checked{% endif %}
+              />
+
+              {{ option }}
+            </label>
+
+            {% endfor %}
+
+            <div class="button-row">
+              <div class="left-buttons">
+                {% if question_number > 1 %}
+
+                <button
+                  type="submit"
+                  formaction="/previous-question"
+                  class="secondary"
+                >
+                  ← Previous
+                </button>
+
+                {% endif %}
+              </div>
+
+              <div class="right-buttons">
+                {% if question_number < total_questions %}
+
+                <button
+                  type="submit"
+                  formaction="/next-question"
+                  class="primary"
+                >
+                  Next →
+                </button>
+
+                {% else %}
+
+                <button type="submit" formaction="/submit-exam" class="danger">
+                  Submit Exam ✓
+                </button>
+
+                {% endif %}
+
+                <button type="submit" formaction="/pause-exam" class="pause">
+                  Pause
+                </button>
+              </div>
+            </div>
+          </form>
+
+          {% endif %}
+        </div>
+
+        <!-- MONITORING CARD -->
+
+        <div class="card">
+          <h2>Live Monitoring</h2>
+
+          <p class="card-subtitle">Candidate verification & monitoring</p>
+
+          <div class="camera-box">
+            <video id="camera" autoplay playsinline muted></video>
+
+            <div id="camera-message" class="camera-message">
+              Camera Monitoring Inactive
+            </div>
+          </div>
+
+          <div class="camera-status">
+            <span id="camera-dot" class="camera-dot"></span>
+
+            <span id="camera-status-text"> Camera Off </span>
+          </div>
+
+          <div class="security">
+            <div class="security-title">Integrity Score</div>
+
+            <div class="security-score">100%</div>
+          </div>
+
+          <div class="warning">
+            ⚠ Monitoring alerts will appear here during the examination.
+          </div>
+        </div>
+      </section>
+
+      {% if status == "STARTED" %}
+
+      <!-- QUESTION PALETTE -->
+
+      <section class="palette">
+        <h3>Question Palette</h3>
+
+        <div class="palette-buttons">
+          {% for number in range(1, total_questions + 1) %}
+
+          <form
+            method="POST"
+            action="/question/{{ number }}"
+            class="palette-form"
+          >
+            <button
+              type="submit"
+              class="palette-button {% if number == question_number %}palette-current{% endif %}"
+            >
+              {{ number }}
+            </button>
+          </form>
+
+          {% endfor %}
+        </div>
+      </section>
+
+      {% endif %}
+
+      <!-- PHOTO -->
+
+      <section class="photo-section">
+        <h2>Candidate Verification</h2>
+
+        <p>Your captured photo is linked to your candidate profile.</p>
+
+        <form action="/save-photo" method="POST">
+          <button type="submit" class="primary">Save Captured Photo</button>
+        </form>
+
+        <br />
+
+        <a href="/profile">
+          <button type="button" class="secondary">
+            View Candidate Profile
+          </button>
+        </a>
+      </section>
+
+      {% endif %}
+    </main>
+
+    <footer class="footer">
+      <a href="/dashboard"> ← Back to Dashboard </a>
+
+      &nbsp;&nbsp;|&nbsp;&nbsp;
+
+      <a href="/logout"> Logout </a>
+
+      <br />
+      <br />
+
+      ExamGuard © 2026 — Secure Online Examination Platform
+    </footer>
+
+    <!-- =====================================================
+     CAMERA CONTROL
+     ===================================================== -->
+
+    <script>
+      const examStatus = {{ status|tojson }};
+
+      // =====================================================
+      // LIVE EXAM ALERT POPUPS
+      // =====================================================
+      const alertPopupContainer = document.getElementById("alertPopupContainer");
+
+      function showExamAlert(title, message) {
+        if (examStatus !== "STARTED" || !alertPopupContainer) return;
+
+        const popup = document.createElement("div");
+        popup.className = "alert-popup";
+        popup.innerHTML =
+          '<div class="alert-popup-title">⚠ ' + title + '</div>' +
+          '<div class="alert-popup-message">' + message + '</div>';
+
+        alertPopupContainer.appendChild(popup);
+
+        setTimeout(function () {
+          popup.style.transition = "opacity 0.25s ease, transform 0.25s ease";
+          popup.style.opacity = "0";
+          popup.style.transform = "translateX(30px)";
+          setTimeout(function () {
+            if (popup.parentNode) popup.parentNode.removeChild(popup);
+          }, 300);
+        }, 3500);
+      }
+
+      let lastAlertType = "";
+      let lastAlertTime = 0;
+
+      function logBrowserEvent(eventType, details) {
+        if (examStatus !== "STARTED") return;
+
+        const now = Date.now();
+        if (eventType === lastAlertType && now - lastAlertTime < 1200) return;
+        lastAlertType = eventType;
+        lastAlertTime = now;
+
+        showExamAlert(
+          eventType === "TAB_SWITCH" ? "Tab Switch Detected" :
+          eventType === "FOCUS_LOST" ? "Focus Lost" :
+          eventType === "EXAM_INTERACTION" ? "Exam Activity" :
+          "Monitoring Alert",
+          details || "Exam monitoring event detected."
+        );
+
+        fetch("/log-browser-event", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ event_type: eventType, details: details || "" })
+        }).catch(function (error) {
+          console.error("Browser event logging error:", error);
+        });
+      }
+
+      document.addEventListener("visibilitychange", function () {
+        if (document.visibilityState === "hidden") {
+          logBrowserEvent("TAB_SWITCH", "Exam tab became hidden.");
+        } else if (document.visibilityState === "visible" && examStatus === "STARTED") {
+          showExamAlert("Back to Exam", "Exam tab is active again.");
+        }
+      });
+
+      window.addEventListener("blur", function () {
+        logBrowserEvent("FOCUS_LOST", "Exam window lost browser focus.");
+      });
+
+      window.addEventListener("focus", function () {
+        if (examStatus === "STARTED") {
+          showExamAlert("Focus Restored", "Exam window focus has been restored.");
+        }
+      });
+
+
+      const camera = document.getElementById("camera");
+
+      const cameraMessage = document.getElementById("camera-message");
+
+      const cameraDot = document.getElementById("camera-dot");
+
+      const cameraStatusText = document.getElementById("camera-status-text");
+
+      let cameraStream = null;
+
+      async function startCamera() {
+        if (!camera) {
+          return;
+        }
+
+        try {
+          if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            throw new Error("Camera API not supported");
+          }
+
+          cameraStream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+
+            audio: false,
+          });
+
+          camera.srcObject = cameraStream;
+
+          cameraMessage.style.display = "none";
+
+          cameraDot.classList.add("active");
+
+          cameraStatusText.textContent = "Camera Active";
+        } catch (error) {
+          console.error("Camera error:", error);
+
+          cameraMessage.style.display = "flex";
+
+          cameraMessage.textContent =
+            "Camera permission denied or camera unavailable.";
+
+          cameraDot.classList.remove("active");
+
+          cameraStatusText.textContent = "Camera Not Available";
+        }
+      }
+
+      function stopCamera() {
+        if (!camera) {
+          return;
+        }
+
+        if (cameraStream) {
+          cameraStream.getTracks().forEach(function (track) {
+            track.stop();
+          });
+
+          cameraStream = null;
+        }
+
+        camera.srcObject = null;
+
+        cameraMessage.style.display = "flex";
+
+        cameraMessage.textContent = "Camera Monitoring Inactive";
+
+        cameraDot.classList.remove("active");
+
+        cameraStatusText.textContent = "Camera Off";
+      }
+
+      /*
+       EXAM STATUS BASED CAMERA CONTROL
+    */
+
+      if (examStatus === "STARTED") {
+        startCamera();
+      } else {
+        stopCamera();
+      }
+
+      /*
+       DO NOT stop the camera during question navigation.
+       Next / Previous / Palette navigation reloads /exam, and
+       stopping the stream here causes the camera to turn off
+       briefly between questions.
+
+       The camera is stopped automatically when the submitted
+       page is loaded because examStatus is no longer STARTED.
+      */
+    </script>
+  </body>
+</html>

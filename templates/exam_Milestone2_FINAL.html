@@ -1,0 +1,1375 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>ExamGuard - Examination</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background: #f4f7fb;
+        color: #1e293b;
+      }
+
+      /* ================= HEADER ================= */
+
+      .header {
+        background: #0f172a;
+        color: white;
+        padding: 16px 35px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: #38bdf8;
+      }
+
+      .candidate {
+        font-size: 14px;
+        color: #cbd5e1;
+      }
+
+      /* ================= MAIN ================= */
+
+      .main {
+        max-width: 1200px;
+        margin: 30px auto;
+        padding: 0 20px;
+      }
+
+      /* ================= START SCREEN ================= */
+
+      .start-card {
+        background: white;
+        max-width: 650px;
+        margin: 70px auto;
+        padding: 45px;
+        border-radius: 18px;
+        text-align: center;
+        box-shadow: 0 8px 30px rgba(15, 23, 42, 0.1);
+      }
+
+      .start-card h1 {
+        color: #0f172a;
+        margin-bottom: 15px;
+      }
+
+      .start-card p {
+        color: #64748b;
+        margin-bottom: 25px;
+        line-height: 1.6;
+      }
+
+      .start-info {
+        background: #f8fafc;
+        padding: 18px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        text-align: left;
+      }
+
+      .start-info div {
+        padding: 7px 0;
+        font-size: 14px;
+      }
+
+      .start-button {
+        border: none;
+        background: #2563eb;
+        color: white;
+        padding: 13px 30px;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .start-button:hover {
+        background: #1d4ed8;
+      }
+
+      /* ================= EXAM HEADER ================= */
+
+      .exam-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: white;
+        padding: 18px 22px;
+        border-radius: 14px;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 20px rgba(15, 23, 42, 0.07);
+      }
+
+      .exam-title {
+        font-size: 20px;
+        font-weight: bold;
+        color: #0f172a;
+      }
+
+      .exam-status {
+        padding: 7px 14px;
+        border-radius: 20px;
+        background: #dcfce7;
+        color: #15803d;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      /* ================= GRID ================= */
+
+      .exam-grid {
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 22px;
+      }
+
+      /* ================= QUESTION ================= */
+
+      .question-card {
+        background: white;
+        padding: 30px;
+        border-radius: 16px;
+        box-shadow: 0 5px 20px rgba(15, 23, 42, 0.07);
+      }
+
+      .question-number {
+        color: #2563eb;
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+
+      .question {
+        font-size: 21px;
+        font-weight: bold;
+        line-height: 1.5;
+        margin-bottom: 25px;
+      }
+
+      .option {
+        display: block;
+        padding: 14px 16px;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+
+      .option:hover {
+        background: #f8fafc;
+        border-color: #2563eb;
+      }
+
+      .option input {
+        margin-right: 10px;
+      }
+
+      /* ================= NAVIGATION ================= */
+
+      .navigation {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 25px;
+      }
+
+      .nav-button {
+        border: none;
+        padding: 11px 22px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .previous {
+        background: #e2e8f0;
+        color: #334155;
+      }
+
+      .next {
+        background: #2563eb;
+        color: white;
+      }
+
+      .submit {
+        background: #dc2626;
+        color: white;
+      }
+
+      .nav-button:hover {
+        opacity: 0.9;
+      }
+
+      /* ================= CAMERA ================= */
+
+      .monitor-card {
+        background: white;
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 5px 20px rgba(15, 23, 42, 0.07);
+        height: fit-content;
+      }
+
+      .monitor-card h2 {
+        font-size: 18px;
+        margin-bottom: 15px;
+      }
+
+      #camera {
+        width: 100%;
+        height: 190px;
+        background: #0f172a;
+        border-radius: 10px;
+        object-fit: cover;
+      }
+
+      .camera-status {
+        margin-top: 12px;
+        padding: 9px;
+        border-radius: 8px;
+        background: #f1f5f9;
+        font-size: 12px;
+        text-align: center;
+      }
+
+      .face-status {
+        margin-top: 10px;
+        padding: 9px;
+        border-radius: 8px;
+        background: #dcfce7;
+        color: #15803d;
+        font-size: 12px;
+        text-align: center;
+      }
+
+      /* ================= QUESTION NAV ================= */
+
+      .question-nav {
+        margin-top: 20px;
+      }
+
+      .question-nav h3 {
+        font-size: 14px;
+        margin-bottom: 12px;
+      }
+
+      .question-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+      }
+
+      .question-btn {
+        width: 36px;
+        height: 36px;
+        border: 1px solid #cbd5e1;
+        background: white;
+        border-radius: 7px;
+        cursor: pointer;
+      }
+
+      .question-btn:hover {
+        border-color: #2563eb;
+      }
+
+      .question-btn.active {
+        background: #2563eb;
+        color: white;
+        border-color: #2563eb;
+      }
+
+      /* ================= POPUP ================= */
+
+      #alertPopup {
+        display: none;
+        position: fixed;
+        top: 25px;
+        right: 25px;
+        width: 350px;
+        background: white;
+        border-left: 6px solid #dc2626;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+        z-index: 9999;
+        animation: popupIn 0.25s ease;
+      }
+
+      #alertPopup h3 {
+        color: #dc2626;
+        margin-bottom: 8px;
+      }
+
+      #alertPopup p {
+        color: #475569;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .popup-close {
+        margin-top: 14px;
+        background: #dc2626;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 7px;
+        cursor: pointer;
+      }
+
+      @keyframes popupIn {
+        from {
+          transform: translateX(30px);
+          opacity: 0;
+        }
+
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      /* ================= SUBMITTED ================= */
+
+      .submitted-card {
+        max-width: 650px;
+        margin: 70px auto;
+        background: white;
+        padding: 45px;
+        border-radius: 18px;
+        text-align: center;
+        box-shadow: 0 8px 30px rgba(15, 23, 42, 0.1);
+      }
+
+      .submitted-card h1 {
+        color: #16a34a;
+        margin-bottom: 15px;
+      }
+
+      .score {
+        font-size: 40px;
+        font-weight: bold;
+        color: #2563eb;
+        margin: 20px 0;
+      }
+
+      .dashboard-button {
+        display: inline-block;
+        background: #2563eb;
+        color: white;
+        padding: 12px 25px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      /* ================= RESPONSIVE ================= */
+
+      @media (max-width: 850px) {
+        .exam-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .monitor-card {
+          order: -1;
+        }
+
+        .header {
+          padding: 15px 20px;
+        }
+
+        #alertPopup {
+          width: calc(100% - 30px);
+          right: 15px;
+          top: 15px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ================= HEADER ================= -->
+
+    <header class="header">
+      <div class="logo">ExamGuard</div>
+
+      <div class="candidate">Candidate: <strong>{{ name }}</strong></div>
+    </header>
+
+    <!-- ================= ALERT POPUP ================= -->
+
+    <div id="alertPopup">
+      <h3>⚠️ ExamGuard Alert</h3>
+
+      <p id="alertMessage">Suspicious activity detected.</p>
+
+      <button class="popup-close" onclick="closeAlert()">OK</button>
+    </div>
+
+    <main class="main">
+      <!-- =====================================================
+           SUBMITTED
+           ===================================================== -->
+
+      {% if submitted %}
+
+      <div class="submitted-card">
+        <h1>✓ Exam Submitted</h1>
+
+        <p>Your examination has been submitted successfully.</p>
+
+        <div class="score">{{ score }} / {{ total_questions }}</div>
+
+        <p>Your exam monitoring information has been recorded.</p>
+
+        <br />
+
+        <a href="/dashboard" class="dashboard-button"> Go to Dashboard </a>
+      </div>
+
+      <!-- =====================================================
+           START SCREEN
+           ===================================================== -->
+
+      {% elif status != "STARTED" %}
+
+      <div class="start-card">
+        <h1>ExamGuard Mock Examination</h1>
+
+        <p>
+          Welcome {{ name }}. Please read the instructions before starting your
+          examination.
+        </p>
+
+        <div class="start-info">
+          <div>
+            <strong>Questions:</strong>
+            {{ total_questions }}
+          </div>
+
+          <div>
+            <strong>Mode:</strong>
+            MCQ Assessment
+          </div>
+
+          <div>
+            <strong>Monitoring:</strong>
+            Camera + Browser Activity
+          </div>
+
+          <div>
+            <strong>Important:</strong>
+            Tab switching and focus loss will be recorded.
+          </div>
+        </div>
+
+        <form action="/start-exam" method="POST">
+          <button type="submit" class="start-button">
+            Start Examination →
+          </button>
+        </form>
+      </div>
+
+      <!-- =====================================================
+           ACTIVE EXAM
+           ===================================================== -->
+
+      {% else %}
+
+      <div class="exam-top">
+        <div class="exam-title">ExamGuard Mock Test</div>
+
+        <div class="exam-status">● EXAM IN PROGRESS</div>
+      </div>
+
+      <div class="exam-grid">
+        <!-- =================================================
+             QUESTION CARD
+             ================================================= -->
+
+        <div class="question-card">
+          <div class="question-number">
+            Question {{ question_number }} of {{ total_questions }}
+          </div>
+
+          <div class="question">{{ question.question }}</div>
+
+          <form id="questionForm" method="POST">
+            <div>
+              {% for option in question.options %}
+
+              <label class="option">
+                <input
+                  type="radio"
+                  name="answer"
+                  value="{{ option }}"
+                  {% if answers and answers.get((question_number - 1)|string) == option %}
+                  checked
+                  {% endif %}
+                />
+
+                {{ option }}
+              </label>
+
+              {% endfor %}
+            </div>
+
+            <!-- ================= NAVIGATION ================= -->
+
+            <div class="navigation">
+              {% if question_number > 1 %}
+
+              <button
+                type="button"
+                class="nav-button previous"
+                onclick="goPrevious()"
+              >
+                ← Previous
+              </button>
+
+              {% else %}
+
+              <span></span>
+
+              {% endif %} {% if question_number < total_questions %}
+
+              <button type="button" class="nav-button next" onclick="goNext()">
+                Next →
+              </button>
+
+              {% else %}
+
+              <button
+                type="button"
+                class="nav-button submit"
+                onclick="submitExam()"
+              >
+                Submit Exam
+              </button>
+
+              {% endif %}
+            </div>
+          </form>
+        </div>
+
+        <!-- =================================================
+             MONITORING CARD
+             ================================================= -->
+
+        <div class="monitor-card">
+          <h2>🔐 Exam Monitoring</h2>
+
+          <video id="camera" autoplay muted playsinline></video>
+
+          <div id="cameraStatus" class="camera-status">Camera starting...</div>
+
+          <div id="faceStatus" class="face-status">Face monitoring active</div>
+
+          <!-- ================= QUESTION NAV ================= -->
+
+          <div class="question-nav">
+            <h3>Questions</h3>
+
+            <div class="question-buttons">
+              {% for q in QUESTIONS %}
+
+              <form
+                method="POST"
+                action="/question/{{ q.id }}"
+                style="display: inline"
+              >
+                <button
+                  type="submit"
+                  class="question-btn {% if q.id == question_number %}active{% endif %}"
+                >
+                  {{ q.id }}
+                </button>
+              </form>
+
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% endif %}
+    </main>
+
+    <!-- =====================================================
+         JAVASCRIPT
+         ===================================================== -->
+
+    <script>
+
+      /*
+       =====================================================
+       EXAMGUARD BROWSER MONITORING
+       =====================================================
+      */
+
+      let tabSwitchCount = 0;
+      let focusLossCount = 0;
+
+      let cameraStream = null;
+      let cameraInterval = null;
+
+      const examStarted =
+        {{ "true" if status == "STARTED" else "false" }};
+
+
+      /*
+       =====================================================
+       POPUP
+       =====================================================
+      */
+
+      function showAlert(message) {
+
+        const popup =
+          document.getElementById("alertPopup");
+
+        const messageBox =
+          document.getElementById("alertMessage");
+
+        if (!popup || !messageBox) {
+          return;
+        }
+
+        messageBox.innerText = message;
+
+        popup.style.display = "block";
+      }
+
+
+      function closeAlert() {
+
+        const popup =
+          document.getElementById("alertPopup");
+
+        if (popup) {
+          popup.style.display = "none";
+        }
+
+      }
+
+
+      /*
+       =====================================================
+       SAVE BROWSER EVENT
+       =====================================================
+      */
+
+      async function saveBrowserEvent(
+        eventType,
+        details
+      ) {
+
+        try {
+
+          const response =
+            await fetch(
+              "/log-browser-event",
+              {
+                method: "POST",
+
+                headers: {
+                  "Content-Type":
+                    "application/json",
+
+                  "X-ExamGuard-AJAX":
+                    "1"
+                },
+
+                body: JSON.stringify({
+                  event_type: eventType,
+                  details: details
+                })
+              }
+            );
+
+
+          const data =
+            await response.json();
+
+          console.log(
+            "Browser event:",
+            data
+          );
+
+        } catch (error) {
+
+          console.error(
+            "Could not save browser event:",
+            error
+          );
+
+        }
+
+      }
+
+
+      /*
+       =====================================================
+       TAB SWITCH DETECTION
+       =====================================================
+      */
+
+      document.addEventListener(
+        "visibilitychange",
+        function() {
+
+          if (!examStarted) {
+            return;
+          }
+
+
+          if (document.hidden) {
+
+            tabSwitchCount++;
+
+
+            const message =
+              "Tab switched " +
+              tabSwitchCount +
+              " time" +
+              (tabSwitchCount === 1
+                ? ""
+                : "s") +
+              ".";
+
+
+            showAlert(message);
+
+
+            saveBrowserEvent(
+              "TAB_SWITCH",
+              "Candidate switched browser tab. Count = " +
+              tabSwitchCount
+            );
+
+          }
+
+        }
+      );
+
+
+      /*
+       =====================================================
+       FOCUS LOSS
+       =====================================================
+      */
+
+      window.addEventListener(
+        "blur",
+        function() {
+
+          if (!examStarted) {
+            return;
+          }
+
+
+          focusLossCount++;
+
+
+          showAlert(
+            "Browser focus lost. Focus loss count: " +
+            focusLossCount
+          );
+
+
+          saveBrowserEvent(
+            "FOCUS_LOST",
+            "Browser window lost focus. Count = " +
+            focusLossCount
+          );
+
+        }
+      );
+
+
+      /*
+       =====================================================
+       FOCUS RETURN
+       =====================================================
+      */
+
+      window.addEventListener(
+        "focus",
+        function() {
+
+          if (!examStarted) {
+            return;
+          }
+
+          console.log(
+            "Browser focus restored."
+          );
+
+        }
+      );
+
+
+      /*
+       =====================================================
+       CAMERA
+       =====================================================
+      */
+
+      async function startCamera() {
+
+        const video =
+          document.getElementById("camera");
+
+        const status =
+          document.getElementById(
+            "cameraStatus"
+          );
+
+
+        if (!video || !examStarted) {
+          return;
+        }
+
+
+        if (
+          !navigator.mediaDevices ||
+          !navigator.mediaDevices.getUserMedia
+        ) {
+
+          if (status) {
+
+            status.innerText =
+              "Camera is not supported by this browser.";
+
+          }
+
+          return;
+
+        }
+
+
+        try {
+
+          cameraStream =
+            await navigator.mediaDevices.getUserMedia({
+
+              video: {
+                width: 640,
+                height: 480,
+                facingMode: "user"
+              },
+
+              audio: false
+
+            });
+
+
+          video.srcObject =
+            cameraStream;
+
+
+          if (status) {
+
+            status.innerText =
+              "✓ Camera connected";
+
+            status.style.background =
+              "#dcfce7";
+
+            status.style.color =
+              "#15803d";
+
+          }
+
+
+          startFaceMonitoring();
+
+
+        } catch (error) {
+
+          console.error(
+            "Camera error:",
+            error
+          );
+
+
+          if (status) {
+
+            status.innerText =
+              "⚠ Camera permission denied";
+
+            status.style.background =
+              "#fee2e2";
+
+            status.style.color =
+              "#b91c1c";
+
+          }
+
+
+          showAlert(
+            "Camera access is required for exam monitoring."
+          );
+
+        }
+
+      }
+
+
+      /*
+       =====================================================
+       SEND CAMERA FRAME
+       =====================================================
+      */
+
+      function startFaceMonitoring() {
+
+        const video =
+          document.getElementById("camera");
+
+
+        if (!video) {
+          return;
+        }
+
+
+        const canvas =
+          document.createElement("canvas");
+
+
+        canvas.width = 320;
+        canvas.height = 240;
+
+
+        cameraInterval =
+          setInterval(
+            async function() {
+
+              if (
+                !cameraStream ||
+                video.readyState < 2
+              ) {
+                return;
+              }
+
+
+              const context =
+                canvas.getContext("2d");
+
+
+              context.drawImage(
+                video,
+                0,
+                0,
+                canvas.width,
+                canvas.height
+              );
+
+
+              const image =
+                canvas.toDataURL(
+                  "image/jpeg",
+                  0.6
+                );
+
+
+              try {
+
+                const response =
+                  await fetch(
+                    "/face-monitor",
+                    {
+
+                      method: "POST",
+
+                      headers: {
+                        "Content-Type":
+                          "application/json"
+                      },
+
+                      body: JSON.stringify({
+                        image: image
+                      })
+
+                    }
+                  );
+
+
+                const data =
+                  await response.json();
+
+
+                updateFaceStatus(data);
+
+
+              } catch (error) {
+
+                console.error(
+                  "Face monitoring error:",
+                  error
+                );
+
+              }
+
+            },
+            5000
+          );
+
+      }
+
+
+      /*
+       =====================================================
+       FACE STATUS
+       =====================================================
+      */
+
+      function updateFaceStatus(data) {
+
+        const box =
+          document.getElementById(
+            "faceStatus"
+          );
+
+
+        if (!box) {
+          return;
+        }
+
+
+        if (!data.success) {
+
+          box.innerText =
+            "⚠ Face monitoring unavailable";
+
+          box.style.background =
+            "#fee2e2";
+
+          box.style.color =
+            "#b91c1c";
+
+          return;
+
+        }
+
+
+        if (data.face_present) {
+
+          box.innerText =
+            "✓ Face detected";
+
+          box.style.background =
+            "#dcfce7";
+
+          box.style.color =
+            "#15803d";
+
+        } else {
+
+          box.innerText =
+            "⚠ Face not detected";
+
+          box.style.background =
+            "#fef3c7";
+
+          box.style.color =
+            "#92400e";
+
+        }
+
+
+        if (data.suspicious) {
+
+          showAlert(
+            "Suspicious activity detected: face absent for more than 2 minutes."
+          );
+
+        }
+
+      }
+
+
+      /*
+       =====================================================
+       NEXT QUESTION
+       =====================================================
+      */
+
+      
+async function goNext() {
+
+  const form = document.getElementById("questionForm");
+
+  if (!form) {
+    return;
+  }
+
+  const formData = new FormData(form);
+
+  try {
+
+    const response = await fetch("/next-question", {
+      method: "POST",
+      headers: {
+        "X-ExamGuard-AJAX": "1"
+      },
+      body: formData
+    });
+
+    const data = await response.json();
+
+    if (!data.success) {
+      alert(data.message || "Unable to move to next question.");
+      return;
+    }
+
+    const questionResponse = await fetch("/exam", {
+      method: "GET",
+      headers: {
+        "X-ExamGuard-AJAX": "1"
+      }
+    });
+
+    const html = await questionResponse.text();
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+
+    const newQuestionCard = doc.querySelector(".question-card");
+    const currentQuestionCard = document.querySelector(".question-card");
+
+    if (newQuestionCard && currentQuestionCard) {
+      currentQuestionCard.replaceWith(newQuestionCard);
+    }
+
+    updateQuestionButtons(doc);
+
+  } catch (error) {
+
+    console.error("Next question error:", error);
+
+    alert("Unable to move to next question.");
+
+  }
+
+}
+
+
+async function goPrevious() {
+
+  const form = document.getElementById("questionForm");
+
+  if (!form) {
+    return;
+  }
+
+  const formData = new FormData(form);
+
+  try {
+
+    const response = await fetch("/previous-question", {
+      method: "POST",
+      headers: {
+        "X-ExamGuard-AJAX": "1"
+      },
+      body: formData
+    });
+
+    const data = await response.json();
+
+    if (!data.success) {
+      alert(data.message || "Unable to move to previous question.");
+      return;
+    }
+
+    const questionResponse = await fetch("/exam", {
+      method: "GET",
+      headers: {
+        "X-ExamGuard-AJAX": "1"
+      }
+    });
+
+    const html = await questionResponse.text();
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+
+    const newQuestionCard = doc.querySelector(".question-card");
+    const currentQuestionCard = document.querySelector(".question-card");
+
+    if (newQuestionCard && currentQuestionCard) {
+      currentQuestionCard.replaceWith(newQuestionCard);
+    }
+
+    updateQuestionButtons(doc);
+
+  } catch (error) {
+
+    console.error("Previous question error:", error);
+
+    alert("Unable to move to previous question.");
+
+  }
+
+}
+
+
+function updateQuestionButtons(doc) {
+
+  const newButtons = doc.querySelector(".question-buttons");
+  const currentButtons = document.querySelector(".question-buttons");
+
+  if (newButtons && currentButtons) {
+    currentButtons.replaceWith(newButtons);
+  }
+
+}
+
+/*
+       =====================================================
+       SUBMIT EXAM
+       =====================================================
+      */
+
+      async function submitExam() {
+
+        const confirmed =
+          confirm(
+            "Are you sure you want to submit the examination?"
+          );
+
+
+        if (!confirmed) {
+          return;
+        }
+
+
+        const form =
+          document.getElementById(
+            "questionForm"
+          );
+
+
+        if (!form) {
+          return;
+        }
+
+
+        const formData =
+          new FormData(form);
+
+
+        try {
+
+          const response =
+            await fetch(
+              "/submit-exam",
+              {
+
+                method: "POST",
+
+                body: formData
+
+              }
+            );
+
+
+          if (response.redirected) {
+
+            window.location.href =
+              response.url;
+
+          } else {
+
+            window.location.href =
+              "/exam";
+
+          }
+
+
+        } catch (error) {
+
+          console.error(
+            "Submit error:",
+            error
+          );
+
+          alert(
+            "Exam submission failed."
+          );
+
+        }
+
+      }
+
+
+      /*
+       =====================================================
+       INITIALIZE
+       =====================================================
+      */
+
+      document.addEventListener(
+        "DOMContentLoaded",
+        function() {
+
+          if (examStarted) {
+
+            startCamera();
+
+          }
+
+        }
+      );
+
+
+      /*
+       =====================================================
+       STOP CAMERA WHEN PAGE LEAVES
+       =====================================================
+      */
+
+      window.addEventListener(
+        "beforeunload",
+        function() {
+
+          if (cameraInterval) {
+
+            clearInterval(
+              cameraInterval
+            );
+
+          }
+
+
+          if (cameraStream) {
+
+            cameraStream
+              .getTracks()
+              .forEach(
+                track =>
+                  track.stop()
+              );
+
+          }
+
+        }
+      );
+    </script>
+  </body>
+</html>

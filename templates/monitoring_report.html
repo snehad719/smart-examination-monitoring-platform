@@ -1,0 +1,195 @@
+<!doctype html>
+<html>
+  <head>
+    <title>ExamGuard Monitoring Report</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 30px;
+        background: #f5f5f5;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .section {
+        background: white;
+        padding: 20px;
+        margin-top: 20px;
+        border-radius: 8px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+      }
+
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: left;
+      }
+
+      th {
+        background: #eee;
+      }
+
+      .summary {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .card {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        min-width: 180px;
+      }
+
+      a {
+        display: inline-block;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>ExamGuard Monitoring Report</h1>
+
+    <div class="section">
+      <h2>Exam Session</h2>
+
+      <p>
+        <strong>Candidate:</strong>
+        {{ candidate["name"] }}
+      </p>
+
+      <p>
+        <strong>Email:</strong>
+        {{ candidate["email"] }}
+      </p>
+
+      <p>
+        <strong>Session ID:</strong>
+        {{ exam_session["id"] }}
+      </p>
+
+      <p>
+        <strong>Status:</strong>
+        {{ exam_session["status"] }}
+      </p>
+
+      <p>
+        <strong>Start Time:</strong>
+        {{ exam_session["start_time"] }}
+      </p>
+
+      <p>
+        <strong>End Time:</strong>
+        {{ exam_session["end_time"] }}
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Monitoring Summary</h2>
+
+      <div class="summary">
+        <div class="card">
+          <h3>Face Events</h3>
+          <p>{{ face_events|length }}</p>
+        </div>
+
+        <div class="card">
+          <h3>Browser Events</h3>
+          <p>{{ browser_events|length }}</p>
+        </div>
+
+        <div class="card">
+          <h3>Tab Switches</h3>
+          <p>{{ tab_switch_count }}</p>
+        </div>
+
+        <div class="card">
+          <h3>Focus Lost</h3>
+          <p>{{ focus_lost_count }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Face Monitoring Events</h2>
+
+      {% if face_events %}
+
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Event Type</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Duration</th>
+        </tr>
+
+        {% for event in face_events %}
+
+        <tr>
+          <td>{{ event["id"] }}</td>
+          <td>{{ event["event_type"] }}</td>
+          <td>{{ event["start_time"] }}</td>
+          <td>{{ event["end_time"] }}</td>
+          <td>{{ event["duration_seconds"] }} seconds</td>
+        </tr>
+
+        {% endfor %}
+      </table>
+
+      {% else %}
+
+      <p>No face monitoring events found.</p>
+
+      {% endif %}
+    </div>
+
+    <div class="section">
+      <h2>Browser Monitoring Events</h2>
+
+      {% if browser_events %}
+
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Event Type</th>
+          <th>Event Time</th>
+          <th>Details</th>
+        </tr>
+
+        {% for event in browser_events %}
+
+        <tr>
+          <td>{{ event["id"] }}</td>
+          <td>{{ event["event_type"] }}</td>
+          <td>{{ event["event_time"] }}</td>
+          <td>{{ event["details"] }}</td>
+        </tr>
+
+        {% endfor %}
+      </table>
+
+      {% else %}
+
+      <p>No browser monitoring events found.</p>
+
+      {% endif %}
+    </div>
+
+    <a href="/dashboard">Back to Dashboard</a>
+
+    <br />
+
+    <a href="/exam">Back to Exam</a>
+  </body>
+</html>

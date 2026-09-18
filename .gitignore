@@ -1,0 +1,12 @@
+venv/
+__pycache__/
+*.pyc
+data/*.db
+data/evidence/
+app/__pycache__/
+app/data/__pycache__/
+*.db
+*.sqlite
+*.sqlite3
+.env
+uploads/

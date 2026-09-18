@@ -1,0 +1,1608 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>ExamGuard Examination</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: #f4f7fb;
+        color: #1f2937;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .header {
+        background: #0f172a;
+        padding: 18px 55px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .logo {
+        color: #38bdf8;
+        font-size: 25px;
+        font-weight: bold;
+      }
+
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .exam-label {
+        color: #cbd5e1;
+        font-size: 14px;
+      }
+
+      .integrity {
+        background: #dcfce7;
+        color: #15803d;
+        padding: 7px 13px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .main {
+        max-width: 1100px;
+        margin: 35px auto;
+        padding: 0 25px;
+      }
+
+      .title-section {
+        margin-bottom: 25px;
+      }
+
+      .title-section h1 {
+        font-size: 28px;
+        color: #0f172a;
+        margin: 0 0 7px 0;
+      }
+
+      .title-section p {
+        color: #64748b;
+        font-size: 14px;
+      }
+
+      .status-bar {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 18px 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 15px rgba(15, 23, 42, 0.05);
+      }
+
+      .status-title {
+        color: #64748b;
+        font-size: 13px;
+      }
+
+      .status-value {
+        margin-top: 5px;
+        font-weight: bold;
+        color: #2563eb;
+      }
+
+      .live-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #16a34a;
+        font-size: 13px;
+        font-weight: bold;
+      }
+
+      .dot {
+        width: 9px;
+        height: 9px;
+        background: #22c55e;
+        border-radius: 50%;
+      }
+
+      .exam-grid {
+        display: grid;
+        grid-template-columns: 1.6fr 1fr;
+        gap: 25px;
+      }
+
+      .card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 28px;
+        box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+      }
+
+      .card h2 {
+        font-size: 20px;
+        color: #0f172a;
+        margin: 0 0 8px 0;
+      }
+
+      .card-subtitle {
+        color: #64748b;
+        font-size: 13px;
+        margin-bottom: 25px;
+      }
+
+      .question-number {
+        color: #2563eb;
+        font-size: 13px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .question {
+        font-size: 18px;
+        font-weight: bold;
+        line-height: 1.5;
+        margin-bottom: 22px;
+      }
+
+      .option {
+        display: block;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        padding: 14px 16px;
+        border-radius: 9px;
+        margin-bottom: 12px;
+        color: #334155;
+        cursor: pointer;
+      }
+
+      .option:hover {
+        border-color: #60a5fa;
+        background: #eff6ff;
+      }
+
+      .option input {
+        margin-right: 10px;
+      }
+
+      .button-row {
+        margin-top: 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .left-buttons,
+      .right-buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      button {
+        border: none;
+        cursor: pointer;
+        padding: 11px 20px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: bold;
+      }
+
+      button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .primary {
+        background: #2563eb;
+        color: white;
+      }
+
+      .primary:hover {
+        background: #1d4ed8;
+      }
+
+      .secondary {
+        background: #e2e8f0;
+        color: #334155;
+      }
+
+      .secondary:hover {
+        background: #cbd5e1;
+      }
+
+      .danger {
+        background: #dc2626;
+        color: white;
+      }
+
+      .danger:hover {
+        background: #b91c1c;
+      }
+
+      .pause {
+        background: #f59e0b;
+        color: white;
+      }
+
+      .pause:hover {
+        background: #d97706;
+      }
+
+      .palette {
+        margin-top: 25px;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 22px;
+        box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05);
+      }
+
+      .palette h3 {
+        font-size: 15px;
+        margin: 0 0 15px 0;
+      }
+
+      .palette-buttons {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .palette-form {
+        margin: 0;
+      }
+
+      .palette-button {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        background: #e2e8f0;
+        color: #334155;
+        border-radius: 8px;
+      }
+
+      .palette-button:hover {
+        background: #bfdbfe;
+      }
+
+      .palette-current {
+        background: #2563eb;
+        color: white;
+      }
+
+      .camera-box {
+        position: relative;
+        height: 210px;
+        background: #0f172a;
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 12px;
+      }
+
+      .camera-box video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transform: scaleX(-1);
+      }
+
+      .camera-message {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 20px;
+        color: #cbd5e1;
+        background: #0f172a;
+        font-size: 13px;
+      }
+
+      .camera-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        font-weight: bold;
+        margin-bottom: 18px;
+      }
+
+      .camera-dot {
+        width: 9px;
+        height: 9px;
+        background: #f59e0b;
+        border-radius: 50%;
+      }
+
+      .camera-dot.active {
+        background: #22c55e;
+      }
+
+      .security {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 18px;
+      }
+
+      .security-title {
+        font-size: 12px;
+        color: #64748b;
+        margin-bottom: 5px;
+      }
+
+      .security-score {
+        color: #16a34a;
+        font-size: 21px;
+        font-weight: bold;
+      }
+
+      .warning {
+        background: #fff7ed;
+        border: 1px solid #fed7aa;
+        color: #c2410c;
+        padding: 13px;
+        border-radius: 9px;
+        font-size: 12px;
+      }
+
+      .paused-box {
+        background: #fff7ed;
+        border: 1px solid #fed7aa;
+        color: #c2410c;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+      }
+
+      .submitted {
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        color: #15803d;
+        border-radius: 12px;
+        padding: 25px;
+        text-align: center;
+      }
+
+      .submitted h2 {
+        margin-bottom: 8px;
+      }
+
+      .score-box {
+        margin-top: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #2563eb;
+      }
+
+      .photo-section {
+        margin-top: 25px;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05);
+      }
+
+      .photo-section h2 {
+        font-size: 19px;
+        color: #0f172a;
+        margin-bottom: 8px;
+      }
+
+      .photo-section p {
+        color: #64748b;
+        font-size: 13px;
+        margin-bottom: 18px;
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 40px;
+        padding: 25px;
+        color: #64748b;
+        font-size: 13px;
+      }
+
+      .footer a {
+        color: #2563eb;
+        text-decoration: none;
+      }
+
+      @media (max-width: 800px) {
+        .header {
+          padding: 18px 25px;
+        }
+
+        .exam-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .status-bar {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+        }
+
+        .button-row {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .left-buttons,
+        .right-buttons {
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="logo">ExamGuard</div>
+
+      <div class="header-right">
+        <span class="exam-label"> Live Examination </span>
+
+        <span class="integrity"> Integrity 100% </span>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="title-section">
+        <h1>ExamGuard Examination</h1>
+
+        <p>Welcome, {{ name }}. Please complete your examination securely.</p>
+      </section>
+
+      <section class="status-bar">
+        <div>
+          <div class="status-title">Exam Status</div>
+
+          <div class="status-value" id="exam-status-value">{{ status }}</div>
+        </div>
+
+        <div class="live-status">
+          <span class="dot"></span>
+          Monitoring Active
+        </div>
+      </section>
+
+      <div id="exam-content">
+        {% if submitted %}
+
+        <section class="submitted">
+          <h2>✓ Exam Submitted Successfully</h2>
+
+          <p>Your examination session has been completed.</p>
+
+          <div class="score-box">
+            Score: {{ score }} / {{ total_questions }}
+          </div>
+
+          <br />
+
+          <p>Thank you for completing the ExamGuard assessment.</p>
+        </section>
+
+        {% else %}
+
+        <section class="exam-grid">
+          <!-- EXAM CARD -->
+
+          <div class="card" id="exam-card">
+            <h2>Examination</h2>
+
+            <p class="card-subtitle">
+              Answer the questions carefully before submitting.
+            </p>
+
+            {% if status == "NOT STARTED" %}
+
+            <div class="question-number">READY TO BEGIN</div>
+
+            <div class="question">
+              Your examination contains {{ total_questions }} questions.
+            </div>
+
+            <p style="color: #64748b">
+              Click the button below to start your examination.
+            </p>
+
+            <div class="button-row">
+              <form action="/start-exam" method="POST" class="ajax-action-form">
+                <button type="submit" class="primary">Start Exam →</button>
+              </form>
+            </div>
+
+            {% elif status == "PAUSED" %}
+
+            <div class="paused-box">
+              <strong> ⏸ Examination Paused </strong>
+
+              <br />
+              <br />
+
+              Your exam is currently paused.
+            </div>
+
+            <div class="button-row">
+              <form
+                action="/resume-exam"
+                method="POST"
+                class="ajax-action-form"
+              >
+                <button type="submit" class="primary">Resume Exam →</button>
+              </form>
+            </div>
+
+            {% elif status == "STARTED" and question %}
+
+            <div class="question-number">
+              QUESTION {{ question_number }} OF {{ total_questions }}
+            </div>
+
+            <div class="question">{{ question.question }}</div>
+
+            <form method="POST" id="questionForm" action="/next-question">
+              {% for option in question.options %}
+
+              <label class="option">
+                <input
+                  type="radio"
+                  name="answer"
+                  value="{{ option }}"
+                  {% if answers and answers.get((question_number - 1)|string) == option %}
+checked
+{% endif %}
+                />
+
+                {{ option }}
+              </label>
+
+              <div class="button-row">
+                <div class="left-buttons">
+                  {% if question_number > 1 %}
+
+                  <button
+                    type="submit"
+                    formaction="/previous-question"
+                    class="secondary"
+                  >
+                    ← Previous
+                  </button>
+
+                  {% endif %}
+                </div>
+
+                <div class="right-buttons">
+                  {% if question_number < total_questions %}
+
+                  <button
+                    type="submit"
+                    formaction="/next-question"
+                    class="primary"
+                  >
+                    Next →
+                  </button>
+
+                  {% else %}
+
+                  <button
+                    type="submit"
+                    formaction="/submit-exam"
+                    class="danger"
+                  >
+                    Submit Exam ✓
+                  </button>
+
+                  {% endif %}
+
+                  <button type="submit" formaction="/pause-exam" class="pause">
+                    Pause
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            {% endif %}
+          </div>
+
+          <!-- MONITORING CARD -->
+
+          <div class="card">
+            <h2>Live Monitoring</h2>
+
+            <p class="card-subtitle">Candidate verification & monitoring</p>
+
+            <div class="camera-box">
+              <video id="camera" autoplay playsinline muted></video>
+
+              <div id="camera-message" class="camera-message">
+                Camera Monitoring Inactive
+              </div>
+            </div>
+
+            <div class="camera-status">
+              <span id="camera-dot" class="camera-dot"></span>
+
+              <span id="camera-status-text"> Camera Off </span>
+            </div>
+
+            <div class="security">
+              <div class="security-title">Integrity Score</div>
+
+              <div class="security-score">100%</div>
+            </div>
+
+            <div class="warning" id="monitoring-warning">
+              ⚠ Monitoring alerts will appear here during the examination.
+            </div>
+          </div>
+        </section>
+
+        {% if status == "STARTED" %}
+
+        <section class="palette">
+          <h3>Question Palette</h3>
+
+          <div class="palette-buttons">
+            {% for number in range(1, total_questions + 1) %}
+
+            <form
+              method="POST"
+              action="/question/{{ number }}"
+              class="palette-form"
+            >
+              <button
+                type="submit"
+                class="palette-button {% if number == question_number %}palette-current{% endif %}"
+              >
+                {{ number }}
+              </button>
+            </form>
+
+            {% endfor %}
+          </div>
+        </section>
+
+        {% endif %}
+
+        <section class="photo-section">
+          <h2>Candidate Verification</h2>
+
+          <p>Your captured photo is linked to your candidate profile.</p>
+
+          <form action="/save-photo" method="POST">
+            <button type="submit" class="primary">Save Captured Photo</button>
+          </form>
+
+          <br />
+
+          <a href="/profile">
+            <button type="button" class="secondary">
+              View Candidate Profile
+            </button>
+          </a>
+        </section>
+
+        {% endif %}
+      </div>
+    </main>
+
+    <footer class="footer">
+      <a href="/dashboard"> ← Back to Dashboard </a>
+
+      &nbsp;&nbsp;|&nbsp;&nbsp;
+
+      <a href="/logout"> Logout </a>
+
+      <br />
+      <br />
+
+      ExamGuard © 2026 — Secure Online Examination Platform
+    </footer>
+
+    <script>
+      // =========================================================
+      // EXAM STATUS
+      // =========================================================
+
+      let examStatus = "{{ status }}";
+
+      // =========================================================
+      // CAMERA STATE
+      // =========================================================
+
+      let cameraStream = null;
+
+      let cameraStarted = false;
+
+      let cameraStarting = false;
+
+      let cameraPermissionDenied = false;
+
+      // =========================================================
+      // CAMERA ELEMENTS
+      // =========================================================
+
+      const video = document.getElementById("camera");
+
+      const cameraMessage = document.getElementById("camera-message");
+
+      const cameraDot = document.getElementById("camera-dot");
+
+      const cameraStatusText = document.getElementById("camera-status-text");
+
+      // =========================================================
+      // CAMERA ACTIVE UI
+      // =========================================================
+
+      function setCameraActive() {
+        if (cameraMessage) {
+          cameraMessage.style.display = "none";
+        }
+
+        if (cameraDot) {
+          cameraDot.classList.add("active");
+        }
+
+        if (cameraStatusText) {
+          cameraStatusText.textContent = "Camera Monitoring Active";
+        }
+      }
+
+      // =========================================================
+      // CAMERA INACTIVE UI
+      // =========================================================
+
+      function setCameraInactive(message) {
+        if (cameraMessage) {
+          cameraMessage.style.display = "flex";
+
+          cameraMessage.textContent = message || "Camera Monitoring Inactive";
+        }
+
+        if (cameraDot) {
+          cameraDot.classList.remove("active");
+        }
+
+        if (cameraStatusText) {
+          cameraStatusText.textContent = "Camera Off";
+        }
+      }
+
+      // =========================================================
+      // START CAMERA
+      //
+      // IMPORTANT:
+      //
+      // getUserMedia() is called ONLY when camera is
+      // actually not running.
+      //
+      // Question navigation will NOT call this again
+      // if the existing cameraStream is active.
+      // =========================================================
+
+      async function startCamera() {
+        // -------------------------------------------------------
+        // Already running
+        // -------------------------------------------------------
+
+        if (cameraStream && cameraStream.active) {
+          if (video) {
+            if (video.srcObject !== cameraStream) {
+              video.srcObject = cameraStream;
+            }
+
+            video.muted = true;
+            video.playsInline = true;
+
+            await video.play().catch(function () {});
+          }
+
+          cameraStarted = true;
+
+          setCameraActive();
+
+          return true;
+        }
+
+        // -------------------------------------------------------
+        // Another start request is already running
+        // -------------------------------------------------------
+
+        if (cameraStarting) {
+          return false;
+        }
+
+        // -------------------------------------------------------
+        // Browser support
+        // -------------------------------------------------------
+
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          setCameraInactive("Camera is not supported by this browser.");
+
+          return false;
+        }
+
+        cameraStarting = true;
+
+        try {
+          console.log("ExamGuard: Requesting camera permission...");
+
+          // -----------------------------------------------------
+          // IMPORTANT:
+          //
+          // This is the ONLY getUserMedia() call.
+          // -----------------------------------------------------
+
+          const newStream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: false,
+          });
+
+          // -----------------------------------------------------
+          // Store stream globally.
+          // -----------------------------------------------------
+
+          cameraStream = newStream;
+
+          if (video) {
+            video.srcObject = cameraStream;
+
+            video.muted = true;
+
+            video.playsInline = true;
+
+            await video.play().catch(function () {});
+          }
+
+          cameraStarted = true;
+
+          cameraPermissionDenied = false;
+
+          setCameraActive();
+
+          console.log("ExamGuard: Camera started successfully.");
+
+          return true;
+        } catch (error) {
+          console.error("ExamGuard camera error:", error);
+
+          cameraStarted = false;
+
+          cameraPermissionDenied = true;
+
+          setCameraInactive("Camera permission is required.");
+
+          return false;
+        } finally {
+          cameraStarting = false;
+        }
+      }
+
+      // =========================================================
+      // STOP CAMERA
+      //
+      // IMPORTANT:
+      //
+      // This function is called ONLY after final submission.
+      //
+      // It is NOT called for:
+      // Next
+      // Previous
+      // Palette
+      // Pause
+      // Resume
+      // Tab switch
+      // Blur
+      // Page navigation
+      // =========================================================
+
+      function stopCamera() {
+        console.log("ExamGuard: Stopping camera after final submission.");
+
+        if (cameraStream) {
+          cameraStream.getTracks().forEach(function (track) {
+            track.stop();
+          });
+
+          cameraStream = null;
+        }
+
+        if (video) {
+          video.srcObject = null;
+        }
+
+        cameraStarted = false;
+
+        cameraStarting = false;
+
+        setCameraInactive("Camera Monitoring Inactive");
+      }
+
+      // =========================================================
+      // RECONNECT EXISTING STREAM TO VIDEO
+      //
+      // This does NOT call getUserMedia().
+      // =========================================================
+
+      async function reconnectExistingCamera() {
+        if (!cameraStream || !cameraStream.active) {
+          return false;
+        }
+
+        if (video) {
+          video.srcObject = cameraStream;
+
+          video.muted = true;
+
+          video.playsInline = true;
+
+          await video.play().catch(function () {});
+        }
+
+        cameraStarted = true;
+
+        setCameraActive();
+
+        return true;
+      }
+
+      // =========================================================
+      // CAMERA STATUS
+      // =========================================================
+
+      function isCameraRunning() {
+        return cameraStream !== null && cameraStream.active === true;
+      }
+
+      // =========================================================
+      // INITIAL CAMERA START
+      //
+      // Only STARTED exam needs camera.
+      //
+      // If page has just loaded and exam is STARTED,
+      // camera starts once.
+      //
+      // After that, AJAX navigation will preserve it.
+      // =========================================================
+
+      if (examStatus === "STARTED") {
+        startCamera();
+      }
+
+      // =========================================================
+      // IMPORTANT:
+      //
+      // DO NOT call startCamera() after every question change.
+      //
+      // Camera remains inside the same document because
+      // Next / Previous / Palette will be intercepted below.
+      // =========================================================
+      // =========================================================
+      // RESPONSE HTML PARSER
+      // =========================================================
+
+      function parseServerResponse(html) {
+        const parser = new DOMParser();
+
+        return parser.parseFromString(html, "text/html");
+      }
+
+      // =========================================================
+      // UPDATE STATUS TEXT
+      // =========================================================
+
+      function updateStatusFromDocument(doc) {
+        const newStatus = doc.querySelector("#exam-status-value");
+
+        const currentStatus = document.querySelector("#exam-status-value");
+
+        if (newStatus && currentStatus) {
+          currentStatus.textContent = newStatus.textContent;
+        }
+      }
+
+      // =========================================================
+      // UPDATE EXAM CARD
+      //
+      // IMPORTANT:
+      //
+      // We replace ONLY the examination card.
+      //
+      // Monitoring card containing video is NOT replaced.
+      //
+      // Therefore cameraStream continues running.
+      // =========================================================
+
+      function updateExamCardFromDocument(doc) {
+        const newExamCard = doc.querySelector("#exam-card");
+
+        const currentExamCard = document.querySelector("#exam-card");
+
+        if (newExamCard && currentExamCard) {
+          currentExamCard.replaceWith(newExamCard);
+        }
+      }
+
+      // =========================================================
+      // UPDATE QUESTION PALETTE
+      // =========================================================
+
+      function updatePaletteFromDocument(doc) {
+        const currentPalette = document.querySelector(".palette");
+
+        const newPalette = doc.querySelector(".palette");
+
+        // -------------------------------------------------------
+        // New page contains palette
+        // -------------------------------------------------------
+
+        if (newPalette && currentPalette) {
+          currentPalette.replaceWith(newPalette);
+
+          return;
+        }
+
+        // -------------------------------------------------------
+        // New page doesn't contain palette
+        // -------------------------------------------------------
+
+        if (!newPalette && currentPalette) {
+          currentPalette.remove();
+        }
+
+        // -------------------------------------------------------
+        // Current page doesn't have palette,
+        // but server response has one.
+        // -------------------------------------------------------
+
+        if (newPalette && !currentPalette) {
+          const examContent = document.querySelector("#exam-content");
+
+          const photoSection = document.querySelector(".photo-section");
+
+          if (examContent && photoSection) {
+            examContent.insertBefore(newPalette, photoSection);
+          }
+        }
+      }
+
+      // =========================================================
+      // HANDLE SERVER RESPONSE
+      // =========================================================
+
+      async function updateExamWithoutReload(response) {
+        const html = await response.text();
+
+        const doc = parseServerResponse(html);
+
+        updateStatusFromDocument(doc);
+
+        updateExamCardFromDocument(doc);
+
+        updatePaletteFromDocument(doc);
+
+        // -------------------------------------------------------
+        // Read new status
+        // -------------------------------------------------------
+
+        const newStatusElement = doc.querySelector("#exam-status-value");
+
+        if (newStatusElement) {
+          examStatus = newStatusElement.textContent.trim();
+        }
+
+        // -------------------------------------------------------
+        // IMPORTANT:
+        //
+        // We do NOT call startCamera() here.
+        //
+        // If camera is already running,
+        // it stays running.
+        // -------------------------------------------------------
+
+        if (cameraStream && cameraStream.active) {
+          setCameraActive();
+        }
+
+        // -------------------------------------------------------
+        // Re-bind forms created by new question HTML
+        // -------------------------------------------------------
+
+        bindAjaxForms();
+
+        return doc;
+      }
+
+      // =========================================================
+      // GENERIC AJAX FORM HANDLER
+      // =========================================================
+
+      async function handleAjaxForm(form) {
+        if (!form || form.dataset.processing === "true") {
+          return;
+        }
+
+        form.dataset.processing = "true";
+
+        const submitButton = form.querySelector('button[type="submit"]');
+
+        if (submitButton) {
+          submitButton.disabled = true;
+        }
+
+        try {
+          const formData = new FormData(form);
+
+          // -----------------------------------------------------
+          // Find actual submit button
+          // -----------------------------------------------------
+
+          const submitter =
+            form.dataset.submitterAction ||
+            form.getAttribute("action") ||
+            form.action;
+
+          const response = await fetch(submitter, {
+            method: "POST",
+            body: formData,
+            credentials: "same-origin",
+          });
+
+          if (!response.ok) {
+            throw new Error("Server returned HTTP " + response.status);
+          }
+
+          await updateExamWithoutReload(response);
+        } catch (error) {
+          console.error("ExamGuard AJAX error:", error);
+
+          // -----------------------------------------------------
+          // If AJAX fails, allow normal navigation as fallback.
+          // -----------------------------------------------------
+
+          form.dataset.allowNormalSubmit = "true";
+
+          form.submit();
+        }
+      }
+
+      // =========================================================
+      // QUESTION FORM HANDLER
+      //
+      // Handles:
+      //
+      // Next
+      // Previous
+      // Submit
+      // Pause
+      //
+      // WITHOUT reloading the page.
+      // =========================================================
+
+      function bindQuestionForm() {
+        const form = document.getElementById("questionForm");
+
+        if (!form) {
+          return;
+        }
+
+        form.addEventListener("click", function (event) {
+          const button = event.target.closest("button");
+
+          if (!button) {
+            return;
+          }
+
+          const action = button.getAttribute("formaction");
+
+          if (action) {
+            form.dataset.submitterAction = action;
+          }
+        });
+
+        form.addEventListener("submit", function (event) {
+          // ---------------------------------------------------
+          // Browser normal submit STOP.
+          // ---------------------------------------------------
+
+          event.preventDefault();
+
+          if (form.dataset.allowNormalSubmit === "true") {
+            return;
+          }
+
+          // ---------------------------------------------------
+          // Determine clicked button action
+          // ---------------------------------------------------
+
+          let action = form.dataset.submitterAction;
+
+          if (!action) {
+            action = form.getAttribute("action");
+          }
+
+          if (!action) {
+            action = "/next-question";
+          }
+
+          // ---------------------------------------------------
+          // Submit using FormData.
+          // ---------------------------------------------------
+
+          const formData = new FormData(form);
+
+          ajaxPost(action, formData);
+        });
+      }
+
+      // =========================================================
+      // AJAX POST
+      // =========================================================
+
+      async function ajaxPost(url, formData) {
+        try {
+          console.log("ExamGuard AJAX:", url);
+
+          const response = await fetch(url, {
+            method: "POST",
+            body: formData,
+            credentials: "same-origin",
+          });
+
+          if (!response.ok) {
+            throw new Error("HTTP " + response.status);
+          }
+
+          // -----------------------------------------------------
+          // FINAL SUBMISSION
+          // -----------------------------------------------------
+
+          if (url === "/submit-exam") {
+            const html = await response.text();
+
+            const doc = parseServerResponse(html);
+
+            // Stop camera ONLY now.
+            stopCamera();
+
+            const examContent = document.querySelector("#exam-content");
+
+            const newContent = doc.querySelector("#exam-content");
+
+            if (examContent && newContent) {
+              examContent.innerHTML = newContent.innerHTML;
+            }
+
+            updateStatusFromDocument(doc);
+
+            examStatus = "SUBMITTED";
+
+            return;
+          }
+
+          // -----------------------------------------------------
+          // Normal question action
+          // -----------------------------------------------------
+
+          await updateExamWithoutReload(response);
+        } catch (error) {
+          console.error("ExamGuard request failed:", error);
+
+          alert("Unable to process the exam action. Please try again.");
+        }
+      }
+
+      // =========================================================
+      // PALETTE HANDLER
+      //
+      // Clicking Q1/Q2/Q3 etc. will NOT reload the page.
+      // =========================================================
+
+      function bindPaletteForms() {
+        const paletteForms = document.querySelectorAll(".palette-form");
+
+        paletteForms.forEach(function (form) {
+          form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const action = form.getAttribute("action");
+
+            const formData = new FormData(form);
+
+            ajaxPost(action, formData);
+          });
+        });
+      }
+
+      // =========================================================
+      // START / RESUME / PAUSE HANDLER
+      // =========================================================
+
+      function bindAjaxActionForms() {
+        const forms = document.querySelectorAll(".ajax-action-form");
+
+        forms.forEach(function (form) {
+          form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const action = form.getAttribute("action");
+
+            const formData = new FormData(form);
+
+            ajaxPost(action, formData);
+          });
+        });
+      }
+
+      // =========================================================
+      // BIND ALL DYNAMIC FORMS
+      // =========================================================
+
+      function bindAjaxForms() {
+        bindQuestionForm();
+
+        bindPaletteForms();
+
+        bindAjaxActionForms();
+      }
+
+      // =========================================================
+      // INITIAL FORM BINDING
+      // =========================================================
+
+      bindAjaxForms();
+      // =========================================================
+      // BROWSER FOCUS MONITORING
+      // =========================================================
+
+      function logBrowserEvent(eventType, message) {
+        console.log(eventType + ": " + message);
+
+        /*
+      If your app.py already has an
+      event logging endpoint, you can
+      connect it here.
+
+      Camera is NOT affected by these events.
+    */
+      }
+
+      // =========================================================
+      // TAB SWITCH DETECTION
+      //
+      // IMPORTANT:
+      //
+      // Tab switch should NOT stop camera.
+      // =========================================================
+
+      document.addEventListener("visibilitychange", function () {
+        if (document.visibilityState === "hidden") {
+          logBrowserEvent("TAB_SWITCH", "Exam tab became hidden.");
+        } else {
+          logBrowserEvent("TAB_RETURN", "Exam tab became visible again.");
+        }
+      });
+
+      // =========================================================
+      // WINDOW FOCUS LOSS
+      //
+      // IMPORTANT:
+      //
+      // Do NOT stop camera.
+      // =========================================================
+
+      window.addEventListener("blur", function () {
+        logBrowserEvent("FOCUS_LOST", "Exam window lost browser focus.");
+      });
+
+      // =========================================================
+      // WINDOW FOCUS RETURN
+      // =========================================================
+
+      window.addEventListener("focus", function () {
+        logBrowserEvent(
+          "FOCUS_RETURNED",
+          "Exam window regained browser focus.",
+        );
+
+        // -----------------------------------------------------
+        // If camera stream still exists,
+        // reconnect it to video.
+        //
+        // NO getUserMedia() call.
+        // -----------------------------------------------------
+
+        if (cameraStream && cameraStream.active) {
+          reconnectExistingCamera();
+        }
+      });
+
+      // =========================================================
+      // PAGE HIDE
+      //
+      // IMPORTANT:
+      //
+      // NEVER call stopCamera() here.
+      //
+      // We don't want question navigation logic to
+      // accidentally stop the camera.
+      // =========================================================
+
+      window.addEventListener("pagehide", function () {
+        console.log("ExamGuard pagehide event.");
+
+        /*
+        IMPORTANT:
+
+        Do NOT call:
+
+        stopCamera();
+
+        here.
+
+        Camera should only stop after:
+        /submit-exam
+      */
+      });
+
+      // =========================================================
+      // BEFORE UNLOAD
+      // =========================================================
+
+      window.addEventListener("beforeunload", function () {
+        /*
+        Do not manually stop camera.
+
+        Normal browser document destruction
+        will release the media resource.
+      */
+      });
+
+      // =========================================================
+      // CAMERA TRACK MONITOR
+      //
+      // This checks whether existing camera track
+      // unexpectedly ended.
+      //
+      // It will NOT continuously call getUserMedia().
+      // =========================================================
+
+      function monitorCamera() {
+        if (examStatus !== "STARTED") {
+          return;
+        }
+
+        // -------------------------------------------------------
+        // No stream exists.
+        //
+        // Only then try to start camera.
+        // -------------------------------------------------------
+
+        if (!cameraStream) {
+          if (!cameraStarting) {
+            console.log("Camera stream missing. Attempting recovery...");
+
+            startCamera();
+          }
+
+          return;
+        }
+
+        // -------------------------------------------------------
+        // Existing stream inactive.
+        // -------------------------------------------------------
+
+        if (!cameraStream.active) {
+          console.log("Camera stream inactive. Attempting recovery...");
+
+          cameraStream = null;
+
+          cameraStarted = false;
+
+          startCamera();
+
+          return;
+        }
+
+        // -------------------------------------------------------
+        // Get video tracks
+        // -------------------------------------------------------
+
+        const tracks = cameraStream.getVideoTracks();
+
+        if (tracks.length === 0) {
+          console.log("No camera track found.");
+
+          cameraStream = null;
+
+          cameraStarted = false;
+
+          startCamera();
+
+          return;
+        }
+
+        const track = tracks[0];
+
+        // -------------------------------------------------------
+        // Track ended unexpectedly
+        // -------------------------------------------------------
+
+        if (track.readyState === "ended") {
+          console.log("Camera track ended unexpectedly.");
+
+          cameraStream = null;
+
+          cameraStarted = false;
+
+          startCamera();
+        }
+      }
+
+      // =========================================================
+      // CAMERA MONITORING TIMER
+      //
+      // Every 3 seconds we check the EXISTING stream.
+      //
+      // This does not restart an active camera.
+      // =========================================================
+
+      setInterval(monitorCamera, 3000);
+
+      // =========================================================
+      // DOM CONTENT LOADED
+      //
+      // IMPORTANT:
+      //
+      // We do NOT blindly call getUserMedia().
+      //
+      // If camera already exists, reconnect it.
+      // Otherwise start only if exam is STARTED.
+      // =========================================================
+
+      document.addEventListener("DOMContentLoaded", function () {
+        if (examStatus === "STARTED") {
+          if (cameraStream && cameraStream.active) {
+            reconnectExistingCamera();
+          } else {
+            startCamera();
+          }
+        }
+      });
+
+      // =========================================================
+      // FINAL SAFETY
+      // =========================================================
+      //
+      // There should be only one actual getUserMedia() call
+      // path: startCamera().
+      //
+      // Next / Previous / Palette do not directly call it.
+      //
+      // Submit stops camera.
+      //
+      // =========================================================
+
+      console.log("ExamGuard camera persistence system loaded.");
+    </script>
+  </body>
+</html>
